@@ -28,6 +28,12 @@ public class Node {
     private boolean isEndNode = false;
 
     /**
+     * The previous node in the node graph.
+     * (Isn't used in all nodes)
+     */
+    private Node previousNode;
+
+    /**
      * Creates a node.
      * @param nodeRect the JavaFX Rectangle that's draw on the GUI
      */
@@ -44,7 +50,7 @@ public class Node {
     }
 
     /**
-     * Resets the node back to the default colour
+     * Resets the node back to the default colour.
      */
     public void resetNode() {
         isBlocked = false;
@@ -58,10 +64,18 @@ public class Node {
      * Resets the node iff it's not a blocked node.
      */
     public void restStartStopNode() {
-        isBlocked = false;
         isVisited = false;
         if (!isBlocked) {
             resetNode();
+        }
+    }
+
+    /**
+     * Clears the route of a previous pathfinding algorithm.
+     */
+    public void clearRoute() {
+        if (!isBlocked && !isEndNode && !isStartNode) {
+            nodeRect.setFill(Nodes.NODE_STATE_COLOURS.get(NodeState.DEFAULT));
         }
     }
 
@@ -126,5 +140,29 @@ public class Node {
      */
     public boolean isEndNode() {
         return isEndNode;
+    }
+
+    /**
+     * Gets if the node is the start node.
+     * @return if node is start node
+     */
+    public boolean isStartNode() {
+        return isStartNode;
+    }
+
+    /**
+     * Sets the previous node.
+     * @param node previous node
+     */
+    public void setPreviousNode(Node node) {
+        previousNode = node;
+    }
+
+    /**
+     * Gets the previous Node.
+     * @return previous node
+     */
+    public Node getPreviousNode() {
+        return previousNode;
     }
 }

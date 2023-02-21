@@ -19,6 +19,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Main class for program
+ *
+ * @author Daniel Banks
+ * @version 1.1
+ */
 public class Main extends Application {
 
     /**
@@ -36,6 +42,16 @@ public class Main extends Application {
     /** Delay between each node being searched. */
     private static long speedDelay = 0;
 
+    /**
+     * Array of possible algorithms names
+     */
+    private static final String[] algorithms = {
+            "DFS",
+            "BFS",
+            "Dijkstra's",
+            "A*"
+    };
+
     /** Main root/pane of the window. */
     private final GridPane root = new GridPane();
 
@@ -52,17 +68,17 @@ public class Main extends Application {
     private final Button searchButton = new Button("Search");
     boolean canSearch = false;
     private final ChoiceBox<String> algSelect =
-            new ChoiceBox<String>(FXCollections.observableArrayList("DFS",
-                    "BFS",
-                    "Dijkstra's",
-                    "A*"));
+            new ChoiceBox<String>(FXCollections.observableArrayList(algorithms));
 
     private final GridPane resultsPane = new GridPane();
 
     private final Slider speedSlider = new Slider(0, 150, 0);
+    private final Label speedLabel = new Label("Speed: ");
 
     private final Label visitedLabel = new Label("Nodes Visited: ");
-    private static final Label vistiedNoLabel = new Label("");
+    private final Label vistiedNoLabel = new Label("");
+
+    private String algorithmSelected = "DFS";
 
     /**
      * Stats the GUI (JavaFx stage)
@@ -104,6 +120,17 @@ public class Main extends Application {
                         speedDelay = newValue.intValue() * 10;
                     }
                 });
+
+        algSelect.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number newNumber) {
+                Nodes.clearRoute();
+                algorithmSelected = algorithms[newNumber.intValue()];
+            }
+        });
+
+        speedSlider.setMinWidth(400);
+
 
         initPathFindingPane();
         initMenuPane();
@@ -162,7 +189,9 @@ public class Main extends Application {
      * Initialises and adds all the relevant nodes to the menu pane.
      */
     private void initMenuPane() {
-        resultsPane.add(new Label("Speed:"), 0, 0);
+        speedLabel.setMinHeight(50);
+        speedLabel.setMinWidth(50);
+        resultsPane.add(speedLabel, 0, 0);
         resultsPane.add(speedSlider, 1, 0);
         menuPane.getChildren().add(resultsPane);
         controlsMenuPane.getChildren().add(startButton);
@@ -202,6 +231,6 @@ public class Main extends Application {
      * Starts a pathfinding Algorithm.
      */
     private void search() {
-        Nodes.search("DFS");
+        Nodes.search(algorithmSelected);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.pathfinding;
 
+import com.example.pathfinding.Algorithms.BFS;
 import com.example.pathfinding.Algorithms.DFS;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -9,6 +10,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * Class that stores all the nodes and performs operations upon them
+ *
+ * @author Daniel Banks
+ * @version 1.1
+ */
 public class Nodes {
     /** Number of nodes. */
     public static final int NO_NODES = 1000;
@@ -73,11 +80,13 @@ public class Nodes {
         Thread searchThread;
         switch (search) {
             case "DFS":
-                DFS dfs = new DFS(startNode, endNode);
-                searchThread = new  Thread(dfs);
+                searchThread = new Thread(new DFS());
+                break;
+            case "BFS":
+                searchThread = new Thread(new BFS());
+                break;
             default:
-                DFS woop = new DFS(startNode, endNode);
-                searchThread = new  Thread(woop);
+                searchThread = new  Thread(new DFS());
         }
 
         searchThread.start();
@@ -98,6 +107,14 @@ public class Nodes {
                 } else {
                     node.restStartStopNode();
                 }
+            }
+        }
+    }
+
+    public static void clearRoute() {
+        for (Node[] nodesRow : nodes) {
+            for (Node node : nodesRow) {
+                node.clearRoute();
             }
         }
     }
@@ -178,5 +195,21 @@ public class Nodes {
     // TODO: will be used in the gui
     public static int noNodesVisited() {
         return nodesVisited;
+    }
+
+    /**
+     * Gets the end node
+     * @return node that's the end node
+     */
+    public static Node getEndNode() {
+        return getNode(endNode);
+    }
+
+    /**
+     * Gets the position of the start node/point
+     * @return int[] {x, y}
+     */
+    public static int[] getStartNodePos() {
+        return startNode;
     }
 }
