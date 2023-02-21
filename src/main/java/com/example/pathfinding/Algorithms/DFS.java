@@ -17,22 +17,6 @@ public class DFS implements Runnable {
     /** Stack of nodes that DFS has traversed. */
     private static final Stack<int[]> nodesStack = new Stack<>();
 
-    /** Start Pos of the Search */
-    private final int[] startPos;
-
-    /** Finish Pos of the search */
-    private final int[] finishPos;
-
-    /**
-     * Creates an instance of DFS.
-     * @param startPos start position of the search
-     * @param finishPos position the search algorithm is searching for
-     */
-    public DFS (int[] startPos, int[] finishPos) {
-        this.startPos = startPos;
-        this.finishPos = finishPos;
-    }
-
     /**
      * Starts the thread that'll complete the DFS search.
      */
@@ -46,6 +30,7 @@ public class DFS implements Runnable {
      * Is called from a thread
      */
     private void search() {
+        int[] startPos = Nodes.getStartNodePos();
         nodesStack.push(startPos);
         Nodes.getNode(startPos).markVisited();
         searchRec(startPos);
