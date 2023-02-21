@@ -10,7 +10,7 @@ import java.util.Queue;
 /**
  * Class to do a breath first search.
  * @author Daniel Banks
- * @version 1.0
+ * @version 1.2
  */
 public class BFS implements Runnable {
 
@@ -31,8 +31,7 @@ public class BFS implements Runnable {
      */
     private void search() {
         nodeQueue.add(Nodes.getStartNodePos());
-        searchRec();
-        getRoute(Nodes.getEndNode());
+        if (searchRec()) getRoute(Nodes.getEndNode());
     }
 
     /**
