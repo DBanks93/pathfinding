@@ -23,7 +23,7 @@ import java.io.IOException;
  * Main class for program
  *
  * @author Daniel Banks
- * @version 1.11
+ * @version 1.12
  */
 public class Main extends Application {
 
@@ -64,11 +64,11 @@ public class Main extends Application {
     private final TilePane controlsMenuPane = new TilePane();
     private final VBox menuPane = new VBox(controlsMenuPane);
     private final Button resetButton = new Button("Reset");
-    private final Button startButton = new Button("Start");
+    private final Button startButton = new Button("Setup");
     private final Button searchButton = new Button("Search");
     boolean canSearch = false;
     private final ChoiceBox<String> algSelect =
-            new ChoiceBox<String>(FXCollections.observableArrayList(algorithms));
+            new ChoiceBox<>(FXCollections.observableArrayList(algorithms));
 
     private final GridPane resultsPane = new GridPane();
 
@@ -86,50 +86,25 @@ public class Main extends Application {
     /**
      * Stats the GUI (JavaFx stage)
      * @param stage JavaFx Stage
-     * @throws IOException IOException
      */
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         algSelect.setValue("DFS");
 
-        resetButton.setOnAction(
-                new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent e) {
-                        reset();
-                    }
-                }
-        );
+        resetButton.setOnAction(e -> reset());
 
-        startButton.setOnAction(
-                new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent e) {
-                        setup();
-                    }
-                }
-        );
+        startButton.setOnAction(e -> setup());
 
-        searchButton.setOnAction(
-                new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent e) {
-                        search();
-                    }
-                }
-        );
+        searchButton.setOnAction(e -> search());
 
         speedSlider.valueProperty().addListener(
-                new ChangeListener<Number>() {
-                    public void changed(ObservableValue<? extends Number>
-                                                observable, Number oldValue, Number newValue) {
-                        speedDelay = newValue.intValue() * 10;
-                    }
-                });
+                (observable, oldValue, newValue) ->
+                        speedDelay = newValue.intValue() * 10L);
 
-        algSelect.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number newNumber) {
-                Nodes.clearRoute();
-                algorithmSelected = algorithms[newNumber.intValue()];
-            }
+        algSelect.getSelectionModel().selectedIndexProperty()
+                .addListener((observableValue, number, newNumber) -> {
+            Nodes.clearRoute();
+            algorithmSelected = algorithms[newNumber.intValue()];
         });
 
         speedSlider.setMinWidth(400);
