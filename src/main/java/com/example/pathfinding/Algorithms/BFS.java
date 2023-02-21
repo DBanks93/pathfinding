@@ -10,7 +10,7 @@ import java.util.Queue;
 /**
  * Class to do a breath first search.
  * @author Daniel Banks
- * @version 1.2
+ * @version 1.25
  */
 public class BFS implements Runnable {
 
@@ -18,7 +18,7 @@ public class BFS implements Runnable {
     private final Queue<int[]> nodeQueue = new LinkedList<>();
 
     /**
-     * Starts the thread that'll complete the DFS search.
+     * Starts the thread that'll complete the BFS search.
      */
     @Override
     public void run() {
@@ -31,7 +31,7 @@ public class BFS implements Runnable {
      */
     private void search() {
         nodeQueue.add(Nodes.getStartNodePos());
-        if (searchRec()) getRoute(Nodes.getEndNode());
+        if (searchRec()) Nodes.getRoute();
     }
 
     /**
@@ -63,17 +63,5 @@ public class BFS implements Runnable {
             }
         }
         return searchRec();
-    }
-
-    /**
-     * Shows the route path to get to the end node.
-     * Traverses route in reversed order
-     * @param currentNode the last node in the route
-     */
-    private void getRoute(Node currentNode) {
-        if (!currentNode.isStartNode()) {
-            currentNode.markDiscovered();
-            getRoute(currentNode.getPreviousNode());
-        }
     }
 }
