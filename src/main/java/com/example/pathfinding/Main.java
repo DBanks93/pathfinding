@@ -13,6 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -23,21 +25,33 @@ import java.io.IOException;
 
 public class Main extends Application {
 
-    /** Window Width. */
+    /**
+     * Window Width.
+     */
     public static final int WIDTH = 1280;
 
-    /** Window Height. */
+    /**
+     * Window Height.
+     */
     public static final int HEIGHT = 720;
+
+    public static boolean mousePressed = false;
 
     private static long speedDelay = 0;
 
-    /** Main root/pane of the window. */
+    /**
+     * Main root/pane of the window.
+     */
     private final GridPane root = new GridPane();
 
-    /** Javafx scene. */
+    /**
+     * Javafx scene.
+     */
     private final Scene scene = new Scene(root, WIDTH, HEIGHT);
 
-    /** Pane where the pathfinding will happen */
+    /**
+     * Pane where the pathfinding will happen
+     */
     private final GridPane pathfindingPane = new GridPane();
 
     private final TilePane controlsMenuPane = new TilePane();
@@ -99,9 +113,20 @@ public class Main extends Application {
         root.add(menuPane, 1, 0);
 
 
-
         stage.setScene(scene);
         stage.show();
+
+        scene.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.SHIFT) {
+                mousePressed = true;
+            }
+        });
+
+        scene.setOnKeyReleased(e -> {
+            if (e.getCode() == KeyCode.SHIFT) {
+                mousePressed = false;
+            }
+        });
 
     }
 
@@ -133,7 +158,9 @@ public class Main extends Application {
         controlsMenuPane.getChildren().add(algSelect);
     }
 
-    /** resets the path finding */
+    /**
+     * resets the path finding
+     */
     private void reset() {
         Nodes.resetNodes(true);
         if (canSearch) {

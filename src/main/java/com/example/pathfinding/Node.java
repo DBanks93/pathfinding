@@ -1,6 +1,7 @@
 package com.example.pathfinding;
 
 import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 
@@ -19,11 +20,12 @@ public class Node {
 
     public Node(Rectangle nodeRect) {
         this.nodeRect = nodeRect;
-        nodeRect.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+        nodeRect.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                nodeRect.setFill(Nodes.NODE_STATE_COLOURS.get(NodeState.BLOCKED));
-                isBlocked = true;
+                if (Main.mousePressed) {
+                    blockTile();
+                }
             }
         });
     }
@@ -57,6 +59,11 @@ public class Node {
     public void setEndNode() {
         isEndNode = true;
         nodeRect.setFill(Nodes.NODE_STATE_COLOURS.get(NodeState.FINISH_POINT));
+    }
+
+    public void blockTile() {
+        nodeRect.setFill(Nodes.NODE_STATE_COLOURS.get(NodeState.BLOCKED));
+        isBlocked = true;
     }
 
     public boolean isBlocked() {
