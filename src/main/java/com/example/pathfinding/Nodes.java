@@ -14,7 +14,7 @@ import java.util.Random;
  * Class that stores all the nodes and performs operations upon them
  *
  * @author Daniel Banks
- * @version 1.1
+ * @version 1.2
  */
 public class Nodes {
     /** Number of nodes. */
@@ -88,9 +88,7 @@ public class Nodes {
             default:
                 searchThread = new  Thread(new DFS());
         }
-
         searchThread.start();
-
     }
 
     /**

@@ -8,7 +8,7 @@ import javafx.scene.shape.Rectangle;
  * Class that represents a "Tile" on the GUI.
  *
  * @author Daniel Banks
- * @version 1.0
+ * @version 1.2
  */
 public class Node {
 
@@ -77,6 +77,7 @@ public class Node {
         if (!isBlocked && !isEndNode && !isStartNode) {
             nodeRect.setFill(Nodes.NODE_STATE_COLOURS.get(NodeState.DEFAULT));
         }
+        isVisited = false;
     }
 
     /** Sets the colour of the node as a start point. */
