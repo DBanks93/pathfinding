@@ -33,11 +33,19 @@ public class Nodes {
     private static final Node[][] nodes =
             new Node[NODES_PANE_WIDTH][NODES_PANE_WIDTH];
 
+    /** Random */
     private static final Random random = new Random();
 
+    /** Position of the start node. */
     private static int[] startNode;
 
+    /** Position of the end node. */
     private static int[] endNode;
+
+    /** Number of nodes visited */
+    private static int nodesVisited = 0; // TODO: will be used in the gui
+
+    private static int distance = -1; // TODO: will be used in the gui
 
     /**
      * initialises all the nodes.
@@ -57,6 +65,10 @@ public class Nodes {
         }
     }
 
+    /**
+     * Starts a search of the nodes based on a set Algorithm.
+     * @param search Pathfinding algorithm name
+     */
     public static void search(String search) {
         Thread searchThread;
         switch (search) {
@@ -72,7 +84,13 @@ public class Nodes {
 
     }
 
+    /**
+     * Resets all the nodes to default values.
+     * @param resetAll if all nodes so be reset or all but blocked nodes
+     */
     public static void resetNodes(boolean resetAll) {
+        nodesVisited = 0;
+        distance = -1;
         for (Node[] nodesRow : nodes) {
             for (Node node : nodesRow) {
                 if (resetAll) {
@@ -84,6 +102,9 @@ public class Nodes {
         }
     }
 
+    /**
+     * Creates a random start point.
+     */
     public static void getRandomStartPoint() {
         startNode = new int[] {
                 random.nextInt(NODES_PANE_WIDTH),
@@ -92,24 +113,37 @@ public class Nodes {
         nodes[startNode[0]][startNode[1]].setStartNode();
     }
 
+    /**
+     * Creates a random end point.
+     */
     public static void getRandomEndPoint() {
         endNode = new int[] {
-                random.nextInt(NODES_PANE_WIDTH),
-                random.nextInt(NODES_PANE_WIDTH)
+                random.nextInt(NODES_PANE_WIDTH -1),
+                random.nextInt(NODES_PANE_WIDTH -1)
         };
         while (endNode == startNode) {
             endNode = new int[] {
-                    random.nextInt(NODES_PANE_WIDTH),
-                    random.nextInt(NODES_PANE_WIDTH)
+                    random.nextInt(NODES_PANE_WIDTH -1),
+                    random.nextInt(NODES_PANE_WIDTH -1)
             };
         }
         nodes[endNode[0]][endNode[1]].setEndNode();
     }
 
+    /**
+     * Gets a node
+     * @param pos position of the node (int {x, y})
+     * @return node
+     */
     public static Node getNode(int[] pos) {
         return nodes[pos[0]][pos[1]];
     }
 
+    /**
+     * Gets the neighbours of a node
+     * @param pos position of nodes to find neighbours (int {x, y})
+     * @return ArrayList of positions (int {x, y})
+     */
     public static ArrayList<int[]> getNeighbours(int[] pos) {
         ArrayList<int[]> xNeighbours = new ArrayList<>();
         if (pos[0] != 0) {
@@ -126,5 +160,23 @@ public class Nodes {
         }
 
         return xNeighbours;
+    }
+
+    /**
+     * Increments the number of visited nodes
+     */
+    // TODO: will be used in the gui
+    public static void addVisited() {
+        ++nodesVisited;
+        Main.setNodesVisited(nodesVisited);
+    }
+
+    /**
+     * Gets the number of nodes visited
+     * @return no. nodes visited
+     */
+    // TODO: will be used in the gui
+    public static int noNodesVisited() {
+        return nodesVisited;
     }
 }

@@ -1,7 +1,5 @@
 package com.example.pathfinding;
 
-import com.example.pathfinding.Algorithms.DFS;
-import com.example.pathfinding.Algorithms.SortingAlg;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -14,13 +12,11 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 
 public class Main extends Application {
@@ -35,23 +31,18 @@ public class Main extends Application {
      */
     public static final int HEIGHT = 720;
 
-    public static boolean mousePressed = false;
+    public static boolean mousePressed = false; // NOT IMPLEMENTED YET
 
+    /** Delay between each node being searched. */
     private static long speedDelay = 0;
 
-    /**
-     * Main root/pane of the window.
-     */
+    /** Main root/pane of the window. */
     private final GridPane root = new GridPane();
 
-    /**
-     * Javafx scene.
-     */
+    /** Javafx scene. */
     private final Scene scene = new Scene(root, WIDTH, HEIGHT);
 
-    /**
-     * Pane where the pathfinding will happen
-     */
+    /** Pane where the pathfinding will happen. */
     private final GridPane pathfindingPane = new GridPane();
 
     private final TilePane controlsMenuPane = new TilePane();
@@ -70,6 +61,14 @@ public class Main extends Application {
 
     private final Slider speedSlider = new Slider(0, 150, 0);
 
+    private final Label visitedLabel = new Label("Nodes Visited: ");
+    private static final Label vistiedNoLabel = new Label("");
+
+    /**
+     * Stats the GUI (JavaFx stage)
+     * @param stage JavaFx Stage
+     * @throws IOException IOException
+     */
     @Override
     public void start(Stage stage) throws IOException {
         algSelect.setValue("DFS");
@@ -130,11 +129,24 @@ public class Main extends Application {
 
     }
 
+    /**
+     * Main method
+     * @param args args
+     */
     public static void main(String[] args) {
         launch();
     }
 
+    // TODO: add number of nodes visited text field
+    public static void setNodesVisited(int noVisited) {
+        //vistiedNoLabel.setText(String.valueOf(noVisited));
+    }
 
+
+    /**
+     * Gets how long the delay between each node being traversed.
+     * @return speedDelay
+     */
     public static long getSpeedDelay() {
         return speedDelay;
     }
@@ -159,26 +171,36 @@ public class Main extends Application {
     }
 
     /**
-     * resets the path finding
+     * resets the path finding.
      */
     private void reset() {
         Nodes.resetNodes(true);
         if (canSearch) {
             controlsMenuPane.getChildren().remove(searchButton);
+            resultsPane.getChildren().remove(visitedLabel);
+            resultsPane.getChildren().remove(vistiedNoLabel);
             canSearch = false;
         }
     }
 
+    /**
+     * Sets up the nodes ready for a search to occur.
+     */
     private void setup() {
         Nodes.resetNodes(false);
         Nodes.getRandomStartPoint();
         Nodes.getRandomEndPoint();
         if (!canSearch) {
             controlsMenuPane.getChildren().add(searchButton);
+            resultsPane.add(visitedLabel, 0, 1);
+            resultsPane.add(vistiedNoLabel, 1, 1);
             canSearch = true;
         }
     }
 
+    /**
+     * Starts a pathfinding Algorithm.
+     */
     private void search() {
         Nodes.search("DFS");
     }
