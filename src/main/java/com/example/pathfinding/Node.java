@@ -34,17 +34,20 @@ public class Node {
     private Node previousNode;
 
     /**
+     * Distance from start node
+     * (Not used in all nodes)
+     */
+    private int distance = 0;
+
+    /**
      * Creates a node.
      * @param nodeRect the JavaFX Rectangle that's draw on the GUI
      */
     public Node(Rectangle nodeRect) {
         this.nodeRect = nodeRect;
-        nodeRect.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (Main.mousePressed) {
-                    blockTile();
-                }
+        nodeRect.addEventHandler(MouseEvent.MOUSE_ENTERED, mouseEvent -> {
+            if (Main.mousePressed) {
+                blockTile();
             }
         });
     }
@@ -57,6 +60,7 @@ public class Node {
         isVisited = false;
         isStartNode = false;
         isEndNode = false;
+        distance = 0;
         nodeRect.setFill(Nodes.NODE_STATE_COLOURS.get(NodeState.DEFAULT));
     }
 
@@ -64,6 +68,7 @@ public class Node {
      * Resets the node iff it's not a blocked node.
      */
     public void restStartStopNode() {
+        distance = 0;
         isVisited = false;
         if (!isBlocked) {
             resetNode();
@@ -77,6 +82,7 @@ public class Node {
         if (!isBlocked && !isEndNode && !isStartNode) {
             nodeRect.setFill(Nodes.NODE_STATE_COLOURS.get(NodeState.DEFAULT));
         }
+        distance = 0;
         isVisited = false;
     }
 
@@ -165,5 +171,21 @@ public class Node {
      */
     public Node getPreviousNode() {
         return previousNode;
+    }
+
+    /**
+     * Sets distance to the start node
+     * @param distance to start node
+     */
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
+
+    /**
+     * Gets distance to the start node
+     * @return distance to start node
+     */
+    public int getDistance() {
+        return distance;
     }
 }

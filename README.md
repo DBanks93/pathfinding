@@ -6,6 +6,7 @@ At the moment it's WIP but feel free to check out some algorithms implemented so
 Current Algorithms:
 - Depth First Search (DFS)
 - Breath First Search (BFS)
+- Dijkstra's 
 
 You can add blocked tiles by holding shift and hovering mouse over tiles
 

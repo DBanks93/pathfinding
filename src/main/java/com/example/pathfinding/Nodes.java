@@ -2,6 +2,7 @@ package com.example.pathfinding;
 
 import com.example.pathfinding.Algorithms.BFS;
 import com.example.pathfinding.Algorithms.DFS;
+import com.example.pathfinding.Algorithms.Dijkstra;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -77,17 +78,13 @@ public class Nodes {
      * @param search Pathfinding algorithm name
      */
     public static void search(String search) {
-        Thread searchThread;
-        switch (search) {
-            case "DFS":
-                searchThread = new Thread(new DFS());
-                break;
-            case "BFS":
-                searchThread = new Thread(new BFS());
-                break;
-            default:
-                searchThread = new  Thread(new DFS());
-        }
+        System.out.println(search);
+        Thread searchThread = switch (search) {
+            case "DFS" -> new Thread(new DFS());
+            case "BFS" -> new Thread(new BFS());
+            case "Dijkstra's" -> new Thread(new Dijkstra());
+            default -> new Thread(new DFS());
+        };
         searchThread.start();
     }
 
@@ -209,5 +206,36 @@ public class Nodes {
      */
     public static int[] getStartNodePos() {
         return startNode;
+    }
+
+    public static int[] getNodePos(Node node) {
+        for (int x = 0; x < NODES_PANE_WIDTH; x++) {
+            for (int y = 0; y < NODES_PANE_WIDTH; y++) {
+                if (node == nodes[x][y]) {
+                    return new int[] {x, y};
+                }
+            }
+        }
+        return new int[] {0, 0};
+    }
+
+    /**
+     * Shows the route path to get to the end node.
+     * Traverses route in reversed order
+     */
+    public static void getRoute() {
+        getRoute(getEndNode());
+    }
+
+    /**
+     * Shows the route path to get to the end node.
+     * Traverses route in reversed order
+     * @param currentNode the last node in the route
+     */
+    private static void getRoute(Node currentNode) {
+        if (!currentNode.isStartNode()) {
+            currentNode.markDiscovered();
+            getRoute(currentNode.getPreviousNode());
+        }
     }
 }
