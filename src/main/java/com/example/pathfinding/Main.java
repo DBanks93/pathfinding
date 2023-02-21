@@ -23,7 +23,7 @@ import java.io.IOException;
  * Main class for program
  *
  * @author Daniel Banks
- * @version 1.1
+ * @version 1.11
  */
 public class Main extends Application {
 
@@ -72,7 +72,10 @@ public class Main extends Application {
 
     private final GridPane resultsPane = new GridPane();
 
-    private final Slider speedSlider = new Slider(0, 150, 0);
+    /** slider that controls the speed of the algorithm
+     * value in slider is in milliseconds
+     */
+    private final Slider speedSlider = new Slider(0, 100, 0);
     private final Label speedLabel = new Label("Speed: ");
 
     private final Label visitedLabel = new Label("Nodes Visited: ");
