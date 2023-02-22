@@ -11,9 +11,9 @@ import java.util.Stack;
 /**
  * Class to do a depth first search.
  * @author Daniel Banks
- * @version 1.0
+ * @version 1.1
  */
-public class DFS implements Runnable {
+public class DFS extends Pathfinding {
     /** Stack of nodes that DFS has traversed. */
     private static final Stack<int[]> nodesStack = new Stack<>();
 
@@ -29,7 +29,8 @@ public class DFS implements Runnable {
      * Starts the search algorithm.
      * Is called from a thread
      */
-    private void search() {
+    @Override
+    protected void search() {
         int[] startPos = Nodes.getStartNodePos();
         nodesStack.push(startPos);
         Nodes.getNode(startPos).markVisited();

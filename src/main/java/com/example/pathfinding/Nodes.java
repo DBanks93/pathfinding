@@ -78,7 +78,7 @@ public class Nodes {
      * @param search Pathfinding algorithm name
      */
     public static void search(String search) {
-        System.out.println(search);
+        clearRoute();
         Thread searchThread = switch (search) {
             case "DFS" -> new Thread(new DFS());
             case "BFS" -> new Thread(new BFS());

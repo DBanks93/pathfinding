@@ -10,9 +10,9 @@ import java.util.Queue;
 /**
  * Class to do a breath first search.
  * @author Daniel Banks
- * @version 1.25
+ * @version 1.3
  */
-public class BFS implements Runnable {
+public class BFS extends Pathfinding {
 
     /** Queue of discovered nodes positions */
     private final Queue<int[]> nodeQueue = new LinkedList<>();
@@ -29,7 +29,8 @@ public class BFS implements Runnable {
      * Starts the search algorithm.
      * Is called from a thread
      */
-    private void search() {
+    @Override
+    protected void search() {
         nodeQueue.add(Nodes.getStartNodePos());
         if (searchRec()) Nodes.getRoute();
     }
