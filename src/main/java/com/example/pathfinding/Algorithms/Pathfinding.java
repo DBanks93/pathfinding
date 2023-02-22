@@ -13,7 +13,6 @@ import java.util.ArrayList;
  */
 public abstract class Pathfinding implements Runnable {
 
-
     /**
      * Starts the search algorithm.
      * Is called from a thread

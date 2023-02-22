@@ -18,6 +18,9 @@ import java.util.Random;
  * @version 1.2
  */
 public class Nodes {
+
+    private static Main main;
+
     /** Number of nodes. */
     public static final int NO_NODES = 1000;
 
@@ -180,7 +183,7 @@ public class Nodes {
     // TODO: will be used in the gui
     public static void addVisited() {
         ++nodesVisited;
-        Main.setNodesVisited(nodesVisited);
+        //main.setNodesVisited(nodesVisited);
     }
 
     /**
