@@ -7,6 +7,7 @@ Current Algorithms:
 - Depth First Search (DFS)
 - Breath First Search (BFS)
 - Dijkstra's 
+- A Star
 
 You can add blocked tiles by holding shift and hovering mouse over tiles
 
