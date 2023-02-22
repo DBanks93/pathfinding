@@ -9,9 +9,17 @@ import java.util.ArrayList;
  * Pathfinding is run as a separate thread
  *
  * @author Daniel Banks
- * @version 1.0
+ * @version 1.1
  */
 public abstract class Pathfinding implements Runnable {
+
+    /**
+     * Starts the thread that'll complete the pathfinding search.
+     */
+    @Override
+    public void run() {
+        search();
+    }
 
     /**
      * Starts the search algorithm.

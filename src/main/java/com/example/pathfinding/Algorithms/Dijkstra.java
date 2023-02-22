@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Class to do a Dijkstra path finding algorithm.
  * @author Daniel Banks
- * @version 1.11
+ * @version 1.2
  */
 public class Dijkstra extends Pathfinding {
 
@@ -18,14 +18,6 @@ public class Dijkstra extends Pathfinding {
 
     /** Visted nodes */
     private final ArrayList<Node> visitedNodes = new ArrayList<>();
-
-    /**
-     * Starts the thread that'll complete Dijkstra's algorithm.
-     */
-    @Override
-    public void run() {
-        search();
-    }
 
     /**
      * Starts the search algorithm.

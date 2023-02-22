@@ -10,19 +10,11 @@ import java.util.Stack;
 /**
  * Class to do a depth first search.
  * @author Daniel Banks
- * @version 1.11
+ * @version 1.2
  */
 public class DFS extends Pathfinding {
     /** Stack of nodes that DFS has traversed. */
     private static final Stack<int[]> nodesStack = new Stack<>();
-
-    /**
-     * Starts the thread that'll complete the DFS search.
-     */
-    @Override
-    public void run() {
-        search();
-    }
 
     /**
      * Starts the search algorithm.
