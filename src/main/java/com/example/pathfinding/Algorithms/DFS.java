@@ -5,13 +5,12 @@ import com.example.pathfinding.Node;
 import com.example.pathfinding.Nodes;
 
 import java.util.ArrayList;
-import java.util.Queue;
 import java.util.Stack;
 
 /**
  * Class to do a depth first search.
  * @author Daniel Banks
- * @version 1.1
+ * @version 1.11
  */
 public class DFS extends Pathfinding {
     /** Stack of nodes that DFS has traversed. */
