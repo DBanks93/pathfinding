@@ -10,15 +10,36 @@ import java.util.ArrayList;
  * Class that'll perform the A Star path finding algorithm
  *
  * @author Daniel Banks
- * @version 1.0
+ * @version 1.1
  */
 public class AStar extends Pathfinding {
+
+    /** How much the distance to end node effects the weight of a node.
+     * Is a factor of magnitude - will be timsed with distance to end
+     */
+    private static double distanceWeight = 1;
 
     /** Nodes who are the head of their sub-graph/branch. */
     private final ArrayList<Node> pathHeads = new ArrayList<>();
 
     /** Visited nodes */
     private final ArrayList<Node> visitedNodes = new ArrayList<>();
+
+    /**
+     * Sets the weight of the distance to the end node.
+     * @param newDisWeight factor of magnitude for the weight
+     */
+    public static void setDistanceWeight(double newDisWeight) {
+        distanceWeight = newDisWeight;
+    }
+
+    /**
+     * Gets the weight of the distance to the end node.
+     * @return factor of magnitude for the weight
+     */
+    public static double getDistanceWeight() {
+        return distanceWeight;
+    }
 
     /**
      * Starts the search algorithm.

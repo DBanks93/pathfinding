@@ -1,5 +1,6 @@
 package com.example.pathfinding;
 
+import com.example.pathfinding.Algorithms.AStar;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;
@@ -17,7 +18,7 @@ import javafx.stage.Stage;
  * Main class for program
  *
  * @author Daniel Banks
- * @version 1.12
+ * @version 1.2
  */
 public class Main extends Application {
 
@@ -75,6 +76,9 @@ public class Main extends Application {
     private final Label visitedLabel = new Label("Nodes Visited: ");
     private final Label vistiedNoLabel = new Label("");
 
+    private final Slider disWeightSlider = new Slider(0, 50, 0);
+    private final Label disWeightLabel = new Label("Distance Weight: ");
+
     private String algorithmSelected = "DFS";
 
     /**
@@ -95,10 +99,15 @@ public class Main extends Application {
                 (observable, oldValue, newValue) ->
                         speedDelay = newValue.intValue() * 10L);
 
+        disWeightSlider.valueProperty().addListener(
+                (observable, oldValue, newValue) ->
+                        AStar.setDistanceWeight(newValue.intValue() / 10.));
+
         algSelect.getSelectionModel().selectedIndexProperty()
                 .addListener((observableValue, number, newNumber) -> {
             Nodes.clearRoute();
             algorithmSelected = algorithms[newNumber.intValue()];
+            algUI();
         });
 
         speedSlider.setMinWidth(400);
@@ -204,5 +213,15 @@ public class Main extends Application {
      */
     private void search() {
         Nodes.search(algorithmSelected);
+    }
+
+    /**
+     * Adds all the JavaFx nodes that are relevant for each algorithm
+     */
+    private void algUI() {
+        if (algorithmSelected.equals("A*")) {
+            resultsPane.add(disWeightLabel, 0, 2);
+            resultsPane.add(disWeightSlider, 1, 2);
+        }
     }
 }

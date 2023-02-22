@@ -1,5 +1,6 @@
 package com.example.pathfinding;
 
+import com.example.pathfinding.Algorithms.AStar;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
@@ -8,7 +9,7 @@ import javafx.scene.shape.Rectangle;
  * Class that represents a "Tile" on the GUI.
  *
  * @author Daniel Banks
- * @version 1.21
+ * @version 1.3
  */
 public class Node {
 
@@ -200,6 +201,6 @@ public class Node {
      * @return double 'Weight' of the tile
      */
     public double getTotalWeight() {
-        return  distance + Nodes.distanceToEnd(this);
+        return  distance + AStar.getDistanceWeight() * Nodes.distanceToEnd(this);
     }
 }
