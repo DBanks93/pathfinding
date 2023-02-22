@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Class to do a Dijkstra path finding algorithm.
  * @author Daniel Banks
- * @version 1.1
+ * @version 1.11
  */
 public class Dijkstra extends Pathfinding {
 
@@ -42,7 +42,7 @@ public class Dijkstra extends Pathfinding {
      * Recursive search that is called until the end node is found.
      * @return if end node is found
      */
-    protected boolean searchRec(Node currentNode, int distance) {
+    private boolean searchRec(Node currentNode, int distance) {
         try {
             Thread.sleep(Main.getSpeedDelay());
         } catch (InterruptedException e) {
