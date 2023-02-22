@@ -8,7 +8,7 @@ import javafx.scene.shape.Rectangle;
  * Class that represents a "Tile" on the GUI.
  *
  * @author Daniel Banks
- * @version 1.2
+ * @version 1.21
  */
 public class Node {
 
@@ -29,13 +29,13 @@ public class Node {
 
     /**
      * The previous node in the node graph.
-     * (Isn't used in all nodes)
+     * (Isn't used in all pathfinding)
      */
     private Node previousNode;
 
     /**
      * Distance from start node
-     * (Not used in all nodes)
+     * (Not used in all pathfinding)
      */
     private int distance = 0;
 
@@ -187,5 +187,19 @@ public class Node {
      */
     public int getDistance() {
         return distance;
+    }
+
+
+    /**
+     * Gets the 'weight' of a node.
+     * Weight represents how close the node is to the item or the cost to start at that tile.
+     * The lower, the better.
+     * Higher weight means it's not worth as much to look at, and it's more of a last resort.
+     *
+     * Calculated by adding distance from root to distance to item.
+     * @return double 'Weight' of the tile
+     */
+    public double getTotalWeight() {
+        return  distance + Nodes.distanceToEnd(this);
     }
 }

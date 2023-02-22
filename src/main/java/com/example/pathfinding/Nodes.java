@@ -1,5 +1,6 @@
 package com.example.pathfinding;
 
+import com.example.pathfinding.Algorithms.AStar;
 import com.example.pathfinding.Algorithms.BFS;
 import com.example.pathfinding.Algorithms.DFS;
 import com.example.pathfinding.Algorithms.Dijkstra;
@@ -15,7 +16,7 @@ import java.util.Random;
  * Class that stores all the nodes and performs operations upon them
  *
  * @author Daniel Banks
- * @version 1.2
+ * @version 1.3
  */
 public class Nodes {
 
@@ -86,6 +87,7 @@ public class Nodes {
             case "DFS" -> new Thread(new DFS());
             case "BFS" -> new Thread(new BFS());
             case "Dijkstra's" -> new Thread(new Dijkstra());
+            case "A*" -> new Thread(new AStar());
             default -> new Thread(new DFS());
         };
         searchThread.start();
@@ -228,6 +230,16 @@ public class Nodes {
      */
     public static void getRoute() {
         getRoute(getEndNode());
+    }
+
+    /**
+     * Gets the distance between a node, and it's end point.
+     * @return (double) distance
+     */
+    public static double distanceToEnd(Node node) {
+        int[] nodePos = Nodes.getNodePos(node);
+        return Math.sqrt(Math.pow(nodePos[0] - endNode[0], 2.0)
+                + Math.pow(nodePos[1] - endNode[1], 2.0));
     }
 
     /**

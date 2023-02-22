@@ -7,16 +7,17 @@ import com.example.pathfinding.Nodes;
 import java.util.ArrayList;
 
 /**
- * Class to do a Dijkstra path finding algorithm.
+ * Class that'll perform the A Star path finding algorithm
+ *
  * @author Daniel Banks
- * @version 1.2
+ * @version 1.0
  */
-public class Dijkstra extends Pathfinding {
+public class AStar extends Pathfinding {
 
     /** Nodes who are the head of their sub-graph/branch. */
-    private final ArrayList<Node> pathsHeads = new ArrayList<>();
+    private final ArrayList<Node> pathHeads = new ArrayList<>();
 
-    /** Visted nodes */
+    /** Visited nodes */
     private final ArrayList<Node> visitedNodes = new ArrayList<>();
 
     /**
@@ -26,7 +27,7 @@ public class Dijkstra extends Pathfinding {
     @Override
     protected void search() {
         Node startNode = Nodes.getNode(Nodes.getStartNodePos());
-        pathsHeads.add(startNode);
+        pathHeads.add(startNode);
         if (searchRec(startNode, 1)) Nodes.getRoute();
     }
 
@@ -41,28 +42,34 @@ public class Dijkstra extends Pathfinding {
             System.out.println("Thread Interruption Error");
             e.printStackTrace();
         }
+
         if (currentNode.isEndNode()) {
             return true;
         }
-        pathsHeads.remove(0);
-        currentNode.markVisited();
-        ArrayList<int[]> neighbours = Nodes.getNeighbours(Nodes.getNodePos(currentNode));
-        for (int[] neighbourPos : neighbours) {
-            Node neighbourNode = Nodes.getNode(neighbourPos);
-            if (!neighbourNode.isBlocked()
-                    &&(!visitedNodes.contains(neighbourNode)
-                    || neighbourNode.getDistance() > distance)) {
-                neighbourNode.setDistance(distance);
-                neighbourNode.setPreviousNode(currentNode);
-                addList(visitedNodes, neighbourNode);
-                addList(pathsHeads, neighbourNode);
-            }
-        }
-        if (pathsHeads.isEmpty()) {
+
+        ArrayList<int[]> neighboursPos =
+                Nodes.getNeighbours(Nodes.getNodePos(currentNode));
+
+        if (neighboursPos.isEmpty()) {
             return false;
         }
-        return searchRec(pathsHeads.get(0), distance + 1);
+
+        pathHeads.remove(0);
+
+        for (int[] neighbourPos : neighboursPos) {
+            Node neighbour = Nodes.getNode(neighbourPos);
+            if (!neighbour.isBlocked() && (!neighbour.isVisited()
+                    || neighbour.getDistance() > distance)) {
+                neighbour.setPreviousNode(currentNode);
+                neighbour.setDistance(distance);
+                addList(pathHeads, neighbour);
+                neighbour.markVisited();
+            }
+        }
+
+        return searchRec(pathHeads.get(0), distance + 1);
     }
+
 
     /** Adds a node to given ArrayList in order making it a sorted array.
      * Nodes are compared by their distance to from the start point
@@ -70,9 +77,9 @@ public class Dijkstra extends Pathfinding {
      * @param list List the node is added to
      * @param node node to be added to the arrayList
      */
-    private void addList(ArrayList<Node> list, Node node) {
+    protected void addList(ArrayList<Node> list, Node node) {
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getDistance() > node.getDistance()) {
+            if (list.get(i).getTotalWeight() > node.getTotalWeight()) {
                 list.add(i, node);
                 return;
             }
