@@ -10,7 +10,7 @@ import java.util.Queue;
 /**
  * Class to do a breath first search.
  * @author Daniel Banks
- * @version 1.4
+ * @version 1.5
  */
 public class BFS extends Pathfinding {
 
@@ -23,8 +23,10 @@ public class BFS extends Pathfinding {
      */
     @Override
     protected void search() {
+        setStartTime();
         nodeQueue.add(Nodes.getStartNodePos());
         if (searchRec()) Nodes.getRoute();
+        setEndTime();
     }
 
     /**

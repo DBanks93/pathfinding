@@ -23,7 +23,7 @@ import java.util.HashMap;
  * Main class for program
  *
  * @author Daniel Banks
- * @version 1.3
+ * @version 1.4
  */
 public class Main extends Application {
 
@@ -58,6 +58,9 @@ public class Main extends Application {
     /** String for the distance output*/
     private static final String DISTANCE_STRING = "Distance:     %o";
 
+    /** String for the number of visited nodes output*/
+    private static final String TIME_TAKEN = "Time Taken:    %dms";
+
     /** Main root/pane of the window. */
     private final GridPane root = new GridPane();
 
@@ -85,8 +88,9 @@ public class Main extends Application {
     private final Label speedLabel = new Label("Speed: ");
 
     private final Label vistiedNoLabel = new Label("Nodes Visited");
-
     private final Label distanceLabel = new Label("Distance: ");
+    private final Label timeLabel = new Label("Time Taken: ");
+
 
     /**
      *  All the nodes that'll appear on the results nodes.
@@ -95,12 +99,14 @@ public class Main extends Application {
     private final ArrayList<Node> resultNodes = new ArrayList<>() {{
         add(vistiedNoLabel);
         add(distanceLabel);
+        add(timeLabel);
     }};
 
     /** Map of javaFx nodes to their position of the results grid. */
     HashMap<Node, int[]> resultsNodesPos = new HashMap<>() {{
         put(vistiedNoLabel, new int[] {1, 1});
         put(distanceLabel, new int[] {1, 2});
+        put(timeLabel, new int[] {1, 3});
     }};
 
     private final Slider disWeightSlider = new Slider(0, 50, 0);
@@ -197,6 +203,15 @@ public class Main extends Application {
     }
 
     /**
+     * Sets the time taken for the algorithm to complete search on the GUI.
+     * @param timeTaken time taken (milli seconds)
+     */
+    public void setTime(long timeTaken) {
+        Platform.runLater(() -> timeLabel.setText(
+                String.format(TIME_TAKEN, timeTaken)));
+    }
+
+    /**
      * Gets how long the delay between each node being traversed.
      * @return speedDelay
      */
@@ -278,9 +293,10 @@ public class Main extends Application {
         }
         algorithmFxNodes.clear();
 
+        int xPos = resultNodes.size() + 1;
         if (algorithmSelected.equals("A*")) {
-            resultsPane.add(disWeightLabel, 0, 3);
-            resultsPane.add(disWeightSlider, 1, 3);
+            resultsPane.add(disWeightLabel, 0, xPos);
+            resultsPane.add(disWeightSlider, 1, xPos);
             algorithmFxNodes.add(disWeightLabel);
             algorithmFxNodes.add(disWeightSlider);
         }

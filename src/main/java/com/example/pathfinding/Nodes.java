@@ -55,9 +55,10 @@ public class Nodes {
     private static int[] endNode;
 
     /** Number of nodes visited */
-    private static int nodesVisited = 0; // TODO: will be used in the gui
+    private static int nodesVisited = 0;
 
-    private static int distance = 0; // TODO: will be used in the gui
+    /** distance of the path the algorithm produces */
+    private static int distance = 0;
 
     /**
      * initialises all the nodes.
@@ -197,6 +198,10 @@ public class Nodes {
      */
     public static void addDistance() {
         main.setDistance(distance);
+    }
+
+    public static void addTime(long timeTaken) {
+        main.setTime(timeTaken);
     }
 
     /**

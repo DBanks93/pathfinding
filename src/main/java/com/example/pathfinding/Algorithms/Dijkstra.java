@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Class to do a Dijkstra path finding algorithm.
  * @author Daniel Banks
- * @version 1.2
+ * @version 1.3
  */
 public class Dijkstra extends Pathfinding {
 
@@ -25,9 +25,11 @@ public class Dijkstra extends Pathfinding {
      */
     @Override
     protected void search() {
+        setStartTime();
         Node startNode = Nodes.getNode(Nodes.getStartNodePos());
         pathsHeads.add(startNode);
         if (searchRec(startNode, 1)) Nodes.getRoute();
+        setEndTime();
     }
 
     /**

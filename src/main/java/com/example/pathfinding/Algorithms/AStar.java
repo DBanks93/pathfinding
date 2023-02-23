@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Class that'll perform the A Star path finding algorithm
  *
  * @author Daniel Banks
- * @version 1.1
+ * @version 1.2
  */
 public class AStar extends Pathfinding {
 
@@ -47,9 +47,11 @@ public class AStar extends Pathfinding {
      */
     @Override
     protected void search() {
+        setStartTime();
         Node startNode = Nodes.getNode(Nodes.getStartNodePos());
         pathHeads.add(startNode);
         if (searchRec(startNode, 1)) Nodes.getRoute();
+        setEndTime();
     }
 
     /**
