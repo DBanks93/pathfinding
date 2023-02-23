@@ -1,6 +1,7 @@
 package com.example.pathfinding;
 
 import com.example.pathfinding.Algorithms.AStar;
+import javafx.application.Platform;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 
@@ -127,6 +128,7 @@ public class Node {
      */
     public void markVisited() {
         isVisited = true;
+        Nodes.addVisited();
         if (!isStartNode && !isEndNode) {
             nodeRect.setFill(Nodes.NODE_STATE_COLOURS.get(NodeState.DISCOVERED));
         }

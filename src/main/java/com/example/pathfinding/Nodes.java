@@ -83,6 +83,7 @@ public class Nodes {
      */
     public static void search(String search) {
         clearRoute();
+        nodesVisited = 0;
         Thread searchThread = switch (search) {
             case "DFS" -> new Thread(new DFS());
             case "BFS" -> new Thread(new BFS());
@@ -112,6 +113,8 @@ public class Nodes {
     }
 
     public static void clearRoute() {
+        nodesVisited = 0;
+        distance = 0;
         for (Node[] nodesRow : nodes) {
             for (Node node : nodesRow) {
                 node.clearRoute();
@@ -181,11 +184,19 @@ public class Nodes {
 
     /**
      * Increments the number of visited nodes
+     * Then Adds to the nodes visited on the GUI
      */
-    // TODO: will be used in the gui
     public static void addVisited() {
         ++nodesVisited;
-        //main.setNodesVisited(nodesVisited);
+        main.setNodesVisited(nodesVisited);
+    }
+
+
+    /**
+     * Sets the distance on the GUI in main.
+     */
+    public static void addDistance() {
+        main.setDistance(distance);
     }
 
     /**
@@ -230,6 +241,7 @@ public class Nodes {
      */
     public static void getRoute() {
         getRoute(getEndNode());
+        addDistance();
     }
 
     /**
@@ -240,6 +252,21 @@ public class Nodes {
         int[] nodePos = Nodes.getNodePos(node);
         return Math.sqrt(Math.pow(nodePos[0] - endNode[0], 2.0)
                 + Math.pow(nodePos[1] - endNode[1], 2.0));
+    }
+
+    /**
+     * Sets the instance of Main.
+     * @param main the instance of Main
+     */
+    public static void setMain(Main main) {
+        Nodes.main = main;
+    }
+
+    /**
+     * increments the distance from the start node to the end node.
+     */
+    public static void incDistance() {
+        distance++;
     }
 
     /**

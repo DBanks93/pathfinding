@@ -10,7 +10,7 @@ import java.util.Stack;
 /**
  * Class to do a depth first search.
  * @author Daniel Banks
- * @version 1.2
+ * @version 1.3
  */
 public class DFS extends Pathfinding {
     /** Stack of nodes that DFS has traversed. */
@@ -26,6 +26,7 @@ public class DFS extends Pathfinding {
         nodesStack.push(startPos);
         Nodes.getNode(startPos).markVisited();
         searchRec(startPos);
+        Nodes.addDistance();
     }
 
     /**
@@ -56,9 +57,9 @@ public class DFS extends Pathfinding {
             if (!neighbourNode.isVisited() && !neighbourNode.isBlocked()) {
                 nodesStack.push(neighbour);
                 neighbourNode.markVisited();
-                Nodes.addVisited();
                 if (searchRec(neighbour)) {
                     neighbourNode.markDiscovered();
+                    Nodes.incDistance();
                     return true;
                 }
             }
