@@ -16,7 +16,7 @@ public class Dijkstra extends Pathfinding {
     /** Nodes who are the head of their sub-graph/branch. */
     private final ArrayList<Node> pathsHeads = new ArrayList<>();
 
-    /** Visted nodes */
+    /** Visited nodes. */
     private final ArrayList<Node> visitedNodes = new ArrayList<>();
 
     /**

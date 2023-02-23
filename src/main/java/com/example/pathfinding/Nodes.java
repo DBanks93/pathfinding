@@ -57,7 +57,7 @@ public class Nodes {
     /** Number of nodes visited */
     private static int nodesVisited = 0; // TODO: will be used in the gui
 
-    private static int distance = -1; // TODO: will be used in the gui
+    private static int distance = 0; // TODO: will be used in the gui
 
     /**
      * initialises all the nodes.
@@ -99,7 +99,7 @@ public class Nodes {
      */
     public static void resetNodes(boolean resetAll) {
         nodesVisited = 0;
-        distance = -1;
+        distance = 0;
         for (Node[] nodesRow : nodes) {
             for (Node node : nodesRow) {
                 if (resetAll) {
@@ -251,6 +251,7 @@ public class Nodes {
         if (!currentNode.isStartNode()) {
             currentNode.markDiscovered();
             getRoute(currentNode.getPreviousNode());
+            distance++;
         }
     }
 }

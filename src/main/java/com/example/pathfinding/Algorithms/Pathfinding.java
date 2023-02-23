@@ -1,15 +1,11 @@
 package com.example.pathfinding.Algorithms;
 
-import com.example.pathfinding.Node;
-
-import java.util.ArrayList;
-
 /**
  * Abstract class for all the pathfinding algorithms.
  * Pathfinding is run as a separate thread
  *
  * @author Daniel Banks
- * @version 1.15
+ * @version 1.1.6
  */
 public abstract class Pathfinding implements Runnable {
 

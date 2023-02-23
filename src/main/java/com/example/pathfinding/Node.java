@@ -1,7 +1,6 @@
 package com.example.pathfinding;
 
 import com.example.pathfinding.Algorithms.AStar;
-import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 
