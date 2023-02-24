@@ -187,11 +187,9 @@ public class Nodes {
      * Increments the number of visited nodes
      * Then Adds to the nodes visited on the GUI
      */
-    public static void addVisited() {
-        ++nodesVisited;
-        main.setNodesVisited(nodesVisited);
+    public static void addVisited(int noNodesVisited) {
+        main.setNodesVisited(noNodesVisited);
     }
-
 
     /**
      * Sets the distance on the GUI in main.
@@ -208,7 +206,6 @@ public class Nodes {
      * Gets the number of nodes visited
      * @return no. nodes visited
      */
-    // TODO: will be used in the gui
     public static int noNodesVisited() {
         return nodesVisited;
     }
@@ -272,6 +269,14 @@ public class Nodes {
      */
     public static void incDistance() {
         distance++;
+    }
+
+    /**
+     * Gets the distance of the path created by the pathfinding algorithm.
+     * @return distance distance of the path
+     */
+    public static int getDistance() {
+        return distance;
     }
 
     /**

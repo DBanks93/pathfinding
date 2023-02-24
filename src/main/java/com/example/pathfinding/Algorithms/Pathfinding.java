@@ -1,5 +1,6 @@
 package com.example.pathfinding.Algorithms;
 
+import com.example.pathfinding.Main;
 import com.example.pathfinding.Nodes;
 
 /**
@@ -19,12 +20,29 @@ public abstract class Pathfinding implements Runnable {
     /** Time the algorithm finishes */
     protected long endTime = 0;
 
+    protected int nodesVisited = 0;
+
     /**
      * Starts the thread that'll complete the pathfinding search.
      */
     @Override
     public void run() {
         search();
+    }
+
+    /**
+     * Adds a delay before traversing each node.
+     * sleeps the pathfinding thread for a set time
+     */
+    protected void addSeedDelay() {
+        long timeDelay = Main.getSpeedDelay();
+        startTime += timeDelay;
+        try {
+            Thread.sleep(timeDelay);
+        } catch (InterruptedException e) {
+            System.out.println("Thread Interruption Error");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -50,8 +68,26 @@ public abstract class Pathfinding implements Runnable {
         setTimeTaken();
     }
 
+    /**
+     * Adds the time taken to the display/GUI
+     */
     protected void addTimeTaken() {
         Nodes.addTime(timeTaken);
+    }
+
+    /**
+     * Adds the number of nodes visited to the GUI.
+     */
+    protected void setNodesVisited() {
+        Nodes.addVisited(nodesVisited);
+    }
+
+    /**
+     * Increments the number of nodes visited and displays it on the GUI.
+     */
+    protected void incNodesVisited() {
+        nodesVisited++;
+        setNodesVisited();
     }
 
     /**

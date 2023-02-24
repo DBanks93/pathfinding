@@ -9,7 +9,7 @@ import javafx.scene.shape.Rectangle;
  * Class that represents a "Tile" on the GUI.
  *
  * @author Daniel Banks
- * @version 1.3
+ * @version 1.3.1
  */
 public class Node {
 
@@ -128,7 +128,6 @@ public class Node {
      */
     public void markVisited() {
         isVisited = true;
-        Nodes.addVisited();
         if (!isStartNode && !isEndNode) {
             nodeRect.setFill(Nodes.NODE_STATE_COLOURS.get(NodeState.DISCOVERED));
         }

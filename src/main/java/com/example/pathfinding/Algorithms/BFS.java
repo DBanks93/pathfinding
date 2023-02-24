@@ -10,7 +10,7 @@ import java.util.Queue;
 /**
  * Class to do a breath first search.
  * @author Daniel Banks
- * @version 1.5
+ * @version 1.5.1
  */
 public class BFS extends Pathfinding {
 
@@ -34,12 +34,8 @@ public class BFS extends Pathfinding {
      * @return if end node is found
      */
     private boolean searchRec() {
-        try {
-            Thread.sleep(Main.getSpeedDelay());
-        } catch (InterruptedException e) {
-            System.out.println("Thread Interruption Error");
-            e.printStackTrace();
-        }
+        addSeedDelay();
+
         if (nodeQueue.isEmpty()) {
             return false;
         }
@@ -54,6 +50,7 @@ public class BFS extends Pathfinding {
                 nodeQueue.add(neighbourPos);
                 neighbourNode.markVisited();
                 neighbourNode.setPreviousNode(Nodes.getNode(currentPos));
+                incNodesVisited();
                 if (neighbourNode.isEndNode()) return true;
             }
         }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Class to do a Dijkstra path finding algorithm.
  * @author Daniel Banks
- * @version 1.3
+ * @version 1.3.1
  */
 public class Dijkstra extends Pathfinding {
 
@@ -37,12 +37,8 @@ public class Dijkstra extends Pathfinding {
      * @return if end node is found
      */
     private boolean searchRec(Node currentNode, int distance) {
-        try {
-            Thread.sleep(Main.getSpeedDelay());
-        } catch (InterruptedException e) {
-            System.out.println("Thread Interruption Error");
-            e.printStackTrace();
-        }
+        addSeedDelay();
+
         if (currentNode.isEndNode()) {
             return true;
         }
@@ -56,6 +52,7 @@ public class Dijkstra extends Pathfinding {
                     || neighbourNode.getDistance() > distance)) {
                 neighbourNode.setDistance(distance);
                 neighbourNode.setPreviousNode(currentNode);
+                incNodesVisited();
                 addList(visitedNodes, neighbourNode);
                 addList(pathsHeads, neighbourNode);
             }

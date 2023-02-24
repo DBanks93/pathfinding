@@ -10,7 +10,7 @@ import java.util.Stack;
 /**
  * Class to do a depth first search.
  * @author Daniel Banks
- * @version 1.4
+ * @version 1.4.1
  */
 public class DFS extends Pathfinding {
     /** Stack of nodes that DFS has traversed. */
@@ -38,12 +38,7 @@ public class DFS extends Pathfinding {
      * @return if finish pos found in that "branch"
      */
     private boolean searchRec(int[] nodePos) {
-        try {
-            Thread.sleep(Main.getSpeedDelay());
-        } catch (InterruptedException e) {
-            System.out.println("Thread Interruption Error");
-            e.printStackTrace();
-        }
+        addSeedDelay();
 
         if (Nodes.getNode(nodePos).isEndNode()) {
             return true;
@@ -59,6 +54,7 @@ public class DFS extends Pathfinding {
             if (!neighbourNode.isVisited() && !neighbourNode.isBlocked()) {
                 nodesStack.push(neighbour);
                 neighbourNode.markVisited();
+                incNodesVisited();
                 if (searchRec(neighbour)) {
                     neighbourNode.markDiscovered();
                     Nodes.incDistance();
