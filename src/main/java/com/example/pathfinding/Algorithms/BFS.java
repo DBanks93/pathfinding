@@ -34,6 +34,10 @@ public class BFS extends Pathfinding {
      * @return if end node is found
      */
     private boolean searchRec() {
+        if (stopped) {
+            return false;
+        }
+
         addSeedDelay();
 
         if (nodeQueue.isEmpty()) {

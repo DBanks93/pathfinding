@@ -8,7 +8,7 @@ import com.example.pathfinding.Nodes;
  * Pathfinding is run as a separate thread
  *
  * @author Daniel Banks
- * @version 1.2
+ * @version 1.2.1
  */
 public abstract class Pathfinding implements Runnable {
     /** How long the algorithm takes*/
@@ -22,12 +22,20 @@ public abstract class Pathfinding implements Runnable {
 
     protected int nodesVisited = 0;
 
+    /** if the algorithm is marked to stop */
+    protected boolean stopped = false;
+
     /**
      * Starts the thread that'll complete the pathfinding search.
      */
     @Override
     public void run() {
         search();
+    }
+
+    /** Stops the pathfinding algorithm */
+    public void stop() {
+        stopped = true;
     }
 
     /**
@@ -37,11 +45,13 @@ public abstract class Pathfinding implements Runnable {
     protected void addSeedDelay() {
         long timeDelay = Main.getSpeedDelay();
         startTime += timeDelay;
-        try {
-            Thread.sleep(timeDelay);
-        } catch (InterruptedException e) {
-            System.out.println("Thread Interruption Error");
-            e.printStackTrace();
+        if (!stopped) {
+            try {
+                Thread.sleep(timeDelay);
+            } catch (InterruptedException e) {
+                System.out.println("Thread Interruption Error");
+                e.printStackTrace();
+            }
         }
     }
 

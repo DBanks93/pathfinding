@@ -60,6 +60,9 @@ public class AStar extends Pathfinding {
      */
     private boolean searchRec(Node currentNode, int distance) {
         addSeedDelay();
+        if (stopped) {
+            return false;
+        }
 
         if (currentNode.isEndNode()) {
             return true;

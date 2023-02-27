@@ -1,11 +1,9 @@
 package com.example.pathfinding;
 
-import com.example.pathfinding.Algorithms.AStar;
-import com.example.pathfinding.Algorithms.BFS;
-import com.example.pathfinding.Algorithms.DFS;
-import com.example.pathfinding.Algorithms.Dijkstra;
+import com.example.pathfinding.Algorithms.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
@@ -16,7 +14,7 @@ import java.util.Random;
  * Class that stores all the nodes and performs operations upon them
  *
  * @author Daniel Banks
- * @version 1.3
+ * @version 1.3.1
  */
 public class Nodes {
 
@@ -60,6 +58,9 @@ public class Nodes {
     /** distance of the path the algorithm produces */
     private static int distance = 0;
 
+    /** The current pathfinding algorithm */
+    private static Pathfinding currentPathfinding;
+
     /**
      * initialises all the nodes.
      * @param nodesPane GridPane where the nodes will go
@@ -85,14 +86,13 @@ public class Nodes {
     public static void search(String search) {
         clearRoute();
         nodesVisited = 0;
-        Thread searchThread = switch (search) {
-            case "DFS" -> new Thread(new DFS());
-            case "BFS" -> new Thread(new BFS());
-            case "Dijkstra's" -> new Thread(new Dijkstra());
-            case "A*" -> new Thread(new AStar());
-            default -> new Thread(new DFS());
+        currentPathfinding = switch (search) {
+            case "BFS" -> new BFS();
+            case "Dijkstra's" -> new Dijkstra();
+            case "A*" -> new AStar();
+            default -> new DFS();
         };
-        searchThread.start();
+        new Thread(currentPathfinding).start();
     }
 
     /**
@@ -100,6 +100,7 @@ public class Nodes {
      * @param resetAll if all nodes so be reset or all but blocked nodes
      */
     public static void resetNodes(boolean resetAll) {
+        stop();
         nodesVisited = 0;
         distance = 0;
         for (Node[] nodesRow : nodes) {
@@ -114,6 +115,7 @@ public class Nodes {
     }
 
     public static void clearRoute() {
+        stop();
         nodesVisited = 0;
         distance = 0;
         for (Node[] nodesRow : nodes) {
@@ -289,6 +291,17 @@ public class Nodes {
             currentNode.markDiscovered();
             getRoute(currentNode.getPreviousNode());
             distance++;
+        }
+    }
+
+    /**
+     * Stops the pathfinding algorithm.
+     */
+    private static void stop() {
+        if (currentPathfinding != null) {
+            currentPathfinding.stop();
+            currentPathfinding = null;
+            clearRoute();
         }
     }
 }
